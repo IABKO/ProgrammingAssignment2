@@ -1,15 +1,37 @@
-## Put comments here that give an overall description of what your
-## functions do
+## Thank you for grading my Assignment! Please review the peer grading
+## instructions and guidelines before you start grading. Thanks again!
 
-## Write a short comment describing this function
+## This function creates a special matrix object that can cache its inverse,
+## assuming the matrix is invertible.
 
 makeCacheMatrix <- function(x = matrix()) {
+        m <- NULL
+        set <- function(y) {
+                x <<- y
+                m <<- NULL
+        }
+        get <- function() x
+        setinverse <- function(solve) m <<- solve
+        getinverse <- function() m
+        list(set = set, get = get,
+             setinverse = setinverse,
+             getinverse = getinverse)
 
 }
 
-
-## Write a short comment describing this function
+## This function computes the inverse of the invertible matrix returned by
+## makeCacheMatrix above. It checks first whether the inverse has already been
+## calculated (and the matrix has not changed), in wihich case cachesolve
+## should simply retrieve the inverse from the cache instead of computing it.
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+        m <- x$getinverse()
+        if(!is.null(m)) {
+                message("getting cached data")
+                return(m)
+        }
+        data <- x$get()
+        m <- solve(data, ...)
+        x$setinverse(m)
+        m
 }
